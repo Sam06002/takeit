@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "435400540716",
+    "project_id": "takeit-today",
+    "storage_bucket": "takeit-today.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435400540716:android:f8a8c390cbb18984854789",
+        "android_client_info": {
+          "package_name": "com.example.takeit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435400540716-c5nl5p8pvus4nguingh016es3vt28tap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.takeit",
+            "certificate_hash": "3bd224f0e08019885d7690baaefd5e96e8f228e5"
+          }
+        },
+        {
+          "client_id": "435400540716-sms3emvknv2as5li9odputg31ip9vbp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbwO-uNaJWYkabI6fZIM700Dm6jC7xUJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435400540716-251fd3qs4o6eidt8dtl0r45k83qjkv9b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "435400540716-h8lp1eibun9i5ju8gac1rn6r6g8h7oaj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.takeit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
