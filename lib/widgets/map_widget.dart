@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:takeit/utils/app_constants.dart';
@@ -23,10 +26,18 @@ class _MapWidgetState extends State<MapWidget> {
   Marker? _userLocationMarker;
   bool isLoadingMap = false;
 
+  String? _darkMapStyle;
+
   @override
   void initState() {
     super.initState();
     _getUserLocation();
+    _loadMapStyles();
+  }
+
+  Future _loadMapStyles() async {
+    _darkMapStyle =
+        await rootBundle.loadString('assets/map/dark_map_style.json');
   }
 
   Future<void> _getUserLocation() async {
@@ -101,8 +112,19 @@ class _MapWidgetState extends State<MapWidget> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20.0),
         child: GoogleMap(
+          minMaxZoomPreference: MinMaxZoomPreference.unbounded,
+          zoomGesturesEnabled: true,
+          scrollGesturesEnabled: true,
+          zoomControlsEnabled: true,
+          mapType: MapType.normal,
+          gestureRecognizers: {
+            Factory<OneSequenceGestureRecognizer>(
+                () => EagerGestureRecognizer())
+          },
           onMapCreated: (controller) {
             _mapController = controller;
+            // ignore: deprecated_member_use
+            _mapController.setMapStyle(_darkMapStyle);
           },
           myLocationEnabled: true,
           initialCameraPosition: _initialCameraPosition,

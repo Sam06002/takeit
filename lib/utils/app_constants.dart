@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppConstants {
   static String appMainName = " Take it";
   static String appPoweredBy = " Cypherash Labs";
-  // ignore: non_constant_identifier_names
+
   String google_api_key = "AIzaSyB38HELxmmkrO0PlcqGB_AHCQbrX80exEM";
 
   //static const appMainColor = Color.fromARGB(255, 37, 43, 59);

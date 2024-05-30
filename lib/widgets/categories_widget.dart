@@ -19,7 +19,7 @@ class CategoriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height / 4,
+      height: Get.height / 6.5,
       child: FutureBuilder(
           future: FirebaseFirestore.instance.collection('categories').get(),
           builder:
@@ -62,40 +62,38 @@ class CategoriesWidget extends StatelessWidget {
                       return Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(10),
                             child: GestureDetector(
-                              onTap: () {
-                                // fetch shops by category
-                              },
-                              child: Material(
-                                borderRadius: BorderRadius.circular(25),
-                                elevation: 5,
-                                child: Container(
-                                  width: Get.width / 3.2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: FillImageCard(
-                                      width: Get.width / 2.1,
-                                      imageProvider: CachedNetworkImageProvider(
-                                          scale: 0.8,
-                                          categoriesModel.categoryImg),
-                                      title: Center(
-                                          child: Text(
-                                              categoriesModel.categoryName,
-                                              style: GoogleFonts.spaceGrotesk(
-                                                textStyle: const TextStyle(
-                                                    color: AppConstants
-                                                        .appSecondColor,
-                                                    fontSize: 15,
-                                                    //letterSpacing: .5,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ))),
+                                onTap: () {
+                                  // fetch shops by category
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: Get.width / 4,
+                                      height: Get.height / 11,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              AppConstants.appSecondaryColor),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: CachedNetworkImage(
+                                          imageUrl: categoriesModel.categoryImg,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                                    Text(
+                                      categoriesModel.categoryName,
+                                      style: GoogleFonts.spaceGrotesk(
+                                          textStyle: const TextStyle(
+                                              color: AppConstants.appMainColor,
+                                              fontSize: 12,
+                                              //letterSpacing: .5,
+                                              fontWeight: FontWeight.w100)),
+                                    ),
+                                  ],
+                                )),
                           )
                         ],
                       );

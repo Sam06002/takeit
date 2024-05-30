@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,13 +10,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:latlong2/latlong.dart';
 import 'package:takeit/models/shop_loc_model.dart';
+import 'package:takeit/screens/userPanel/allcategories_screen.dart';
 import 'package:takeit/screens/userPanel/search_screen.dart';
 import 'package:takeit/widgets/banner_widget.dart';
 import 'package:takeit/widgets/drawer_widget.dart';
+import 'package:takeit/widgets/flashSale_widget.dart';
 import 'package:takeit/widgets/headings_widget.dart';
 
 import '../../controllers/shop_detail_controller.dart';
 import '../../utils/app_constants.dart';
+import '../../widgets/categories_widget.dart';
 import '../../widgets/map_widget.dart';
 import 'cart_screen.dart';
 import 'shopDetail_screen.dart';
@@ -206,223 +210,22 @@ class _DashBoardState extends State<DashBoard> {
               padding: const EdgeInsets.all(8.0),
               child: HeadingWidget(
                   title: "Daily Essentials 🧺",
-                  onTap: () {},
+                  onTap: () => Get.to(() => const AllCategoriesScreen()),
                   subTitle: "See all"),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: Get.width / 4,
-                          height: Get.height / 11,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppConstants.appSecondaryColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://cdn-icons-png.flaticon.com/512/7263/7263291.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Personal Care",
-                          style: GoogleFonts.spaceGrotesk(
-                              textStyle: const TextStyle(
-                                  color: AppConstants.appMainColor,
-                                  fontSize: 12,
-                                  //letterSpacing: .5,
-                                  fontWeight: FontWeight.w100)),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: Get.width / 4,
-                          height: Get.height / 11,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppConstants.appSecondaryColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://cdn-icons-png.flaticon.com/512/3859/3859737.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Food & Drinks",
-                          style: GoogleFonts.spaceGrotesk(
-                              textStyle: const TextStyle(
-                                  color: AppConstants.appMainColor,
-                                  fontSize: 12,
-                                  //letterSpacing: .5,
-                                  fontWeight: FontWeight.w100)),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: Get.width / 4,
-                          height: Get.height / 11,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppConstants.appSecondaryColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://cdn-icons-png.flaticon.com/512/1529/1529570.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Medicines",
-                          style: GoogleFonts.spaceGrotesk(
-                              textStyle: const TextStyle(
-                                  color: AppConstants.appMainColor,
-                                  fontSize: 12,
-                                  //letterSpacing: .5,
-                                  fontWeight: FontWeight.w100)),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: Get.width / 4,
-                          height: Get.height / 11,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppConstants.appSecondaryColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://cdn-icons-png.flaticon.com/512/2553/2553629.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Household Care",
-                          style: GoogleFonts.spaceGrotesk(
-                              textStyle: const TextStyle(
-                                  color: AppConstants.appMainColor,
-                                  fontSize: 12,
-                                  //letterSpacing: .5,
-                                  fontWeight: FontWeight.w100)),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: Get.width / 4,
-                          height: Get.height / 11,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppConstants.appSecondaryColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://cdn-icons-png.flaticon.com/512/2681/2681662.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Pet Supplies",
-                          style: GoogleFonts.spaceGrotesk(
-                              textStyle: const TextStyle(
-                                  color: AppConstants.appMainColor,
-                                  fontSize: 12,
-                                  //letterSpacing: .5,
-                                  fontWeight: FontWeight.w100)),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: Get.width / 4,
-                          height: Get.height / 11,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppConstants.appSecondaryColor),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://cdn-icons-png.flaticon.com/512/7340/7340650.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Stationary",
-                          style: GoogleFonts.spaceGrotesk(
-                              textStyle: const TextStyle(
-                                  color: AppConstants.appMainColor,
-                                  fontSize: 12,
-                                  //letterSpacing: .5,
-                                  fontWeight: FontWeight.w100)),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
+            const CategoriesWidget(),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: HeadingWidget(
-                  title: "Shops Near You 🏘️",
-                  onTap: () {},
-                  subTitle: "See all"),
+                  title: "Flash Sale 💰", onTap: () {}, subTitle: "See all"),
             ),
-            FutureBuilder(
-              future: _fetchNearbyShops(), // Call your async function here
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                    color: AppConstants.appYellowColor,
-                  )); // Show loading
-                } else if (snapshot.hasError) {
-                  return Center(
-                      child: Text('Error: ${snapshot.error}')); // Show error
-                } else {
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: nearbyShops.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(nearbyShops[index].shopName),
-                        // Add other fields or widgets here (e.g., thumbnail)
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ShopDetailScreen(
-                                  shopId: nearbyShops[index].shopId),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
-                }
-              },
+            const FlashSaleWidget(),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: HeadingWidget(
+                  title: "Flash Sale 💰", onTap: () {}, subTitle: "See all"),
             ),
+            const FlashSaleWidget(),
           ],
         ),
       ),

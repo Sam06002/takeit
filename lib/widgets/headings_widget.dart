@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:takeit/utils/app_constants.dart';
 
@@ -24,13 +23,14 @@ class HeadingWidget extends StatelessWidget {
           children: [
             Text(title,
                 style: GoogleFonts.spaceGrotesk(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     //letterSpacing: .5,
                   ),
                 )),
             GestureDetector(
+              onTap: onTap,
               child: Text(subTitle,
                   style: GoogleFonts.spaceGrotesk(
                     textStyle: const TextStyle(

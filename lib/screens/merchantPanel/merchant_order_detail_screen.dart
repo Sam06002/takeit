@@ -8,7 +8,7 @@ import '../../models/order_model.dart' as orm;
 class MerchantOrderDetailsScreen extends StatelessWidget {
   final orm.Order order;
 
-  MerchantOrderDetailsScreen({Key? key, required this.order}) : super(key: key);
+  MerchantOrderDetailsScreen({super.key, required this.order});
   final OrderController orderController =
       Get.find<OrderController>(); // Get the OrderController instance
 
@@ -16,29 +16,31 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details'),
+        title: const Text('Order Details'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Order ID: #${order.orderId}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
             Text('Customer ID: ${order.customerId}',
-                style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
+                style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 10),
             Text('Order Status: ${order.orderStatus}',
-                style: TextStyle(fontSize: 16)),
-            SizedBox(height: 20),
-            Text('Items:',
+                style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 20),
+            const Text('Items:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             _buildOrderItemsList(order),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text('Total Price: Rs ${order.totalPrice.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
             _buildActionButtons(order), // Call the _buildActionButtons function
           ],
         ),
@@ -59,7 +61,7 @@ class MerchantOrderDetailsScreen extends StatelessWidget {
               .get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
