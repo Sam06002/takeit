@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_card/image_card.dart';
 import 'package:takeit/models/categories_model.dart';
+import 'package:takeit/screens/userPanel/single_category_products_screen.dart';
 import 'package:takeit/utils/app_constants.dart';
 
 import '../controllers/nearbyShop_controller.dart';
@@ -64,9 +65,13 @@ class CategoriesWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: GestureDetector(
-                                onTap: () {
-                                  // fetch shops by category
-                                },
+                                onTap: () =>
+                                    Get.to(() => SingleCategoryProductsScreen(
+                                          categoryId:
+                                              categoriesModel.categoryId,
+                                          categoryImg:
+                                              categoriesModel.categoryImg,
+                                        )),
                                 child: Column(
                                   children: [
                                     Container(

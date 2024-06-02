@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:takeit/models/shop_loc_model.dart';
 import 'package:takeit/screens/userPanel/allcategories_screen.dart';
+import 'package:takeit/screens/userPanel/allflash_sale_screen.dart';
 import 'package:takeit/screens/userPanel/search_screen.dart';
 import 'package:takeit/widgets/banner_widget.dart';
 import 'package:takeit/widgets/drawer_widget.dart';
@@ -217,7 +218,9 @@ class _DashBoardState extends State<DashBoard> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: HeadingWidget(
-                  title: "Flash Sale 💰", onTap: () {}, subTitle: "See all"),
+                  title: "Flash Sale 💰",
+                  onTap: () => Get.to(() => AllFlashSaleScreen()),
+                  subTitle: "See all"),
             ),
             const FlashSaleWidget(),
             Padding(
