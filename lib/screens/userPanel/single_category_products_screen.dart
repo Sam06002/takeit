@@ -47,129 +47,107 @@ class SingleCategoryProductsScreenState
                 color: AppConstants.appYellowColor,
               )),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: Get.width,
-                height: Get.height / 5,
-                decoration: const BoxDecoration(
-                    color: AppConstants.appSecondaryColor,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50),
-                        bottomRight: Radius.circular(50))),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Center(
-                      child: CachedNetworkImage(imageUrl: widget.categoryImg)),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: FutureBuilder(
-                    future: FirebaseFirestore.instance
-                        .collection('products')
-                        .where('categoryId', isEqualTo: widget.categoryId)
-                        .get(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text("Error"),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('products')
+                  .where('categoryId', isEqualTo: widget.categoryId)
+                  .get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Error"),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                    height: Get.height / 5,
+                    child: const Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return const Center(
+                    child: Text("No category found"),
+                  );
+                }
+                if (snapshot.data != null) {
+                  return GridView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisSpacing: 3,
+                        crossAxisSpacing: 3,
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        final productData = snapshot.data!.docs[index];
+                        ProductModel productModel = ProductModel(
+                            productId: productData['productId'],
+                            categoryId: productData['categoryId'],
+                            productName: productData['productName'],
+                            categoryName: productData['categoryName'],
+                            salePrice: productData['salePrice'],
+                            fullPrice: productData['fullPrice'],
+                            productImages: productData['productImages'],
+                            deliveryTime: productData['deliveryTime'],
+                            isSale: productData['isSale'],
+                            productDescription:
+                                productData['productDescription'],
+                            createdAt: productData['createdAt'],
+                            updatedAt: productData['updatedAt']);
+                        return Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(30),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    // fetch shops by category
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: Get.width / 4,
+                                        height: Get.height / 9,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                AppConstants.appSecondaryColor),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(1.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                productModel.productImages[0],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: Get.width / 4,
+                                        child: Text(
+                                          productModel.productName,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.spaceGrotesk(
+                                              textStyle: const TextStyle(
+                                                  color:
+                                                      AppConstants.appMainColor,
+                                                  fontSize: 12,
+                                                  //letterSpacing: .5,
+                                                  fontWeight: FontWeight.w100)),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            )
+                          ],
                         );
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Container(
-                          height: Get.height / 5,
-                          child: const Center(
-                            child: CupertinoActivityIndicator(),
-                          ),
-                        );
-                      }
-                      if (snapshot.data!.docs.isEmpty) {
-                        return const Center(
-                          child: Text("No category found"),
-                        );
-                      }
-                      if (snapshot.data != null) {
-                        return GridView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 3,
-                              crossAxisSpacing: 3,
-                              crossAxisCount: 2,
-                            ),
-                            itemBuilder: (context, index) {
-                              final productData = snapshot.data!.docs[index];
-                              ProductModel productModel = ProductModel(
-                                  productId: productData['productId'],
-                                  categoryId: productData['categoryId'],
-                                  productName: productData['productName'],
-                                  categoryName: productData['categoryName'],
-                                  salePrice: productData['salePrice'],
-                                  fullPrice: productData['fullPrice'],
-                                  productImages: productData['productImages'],
-                                  deliveryTime: productData['deliveryTime'],
-                                  isSale: productData['isSale'],
-                                  productDescription:
-                                      productData['productDescription'],
-                                  createdAt: productData['createdAt'],
-                                  updatedAt: productData['updatedAt']);
-                              return Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(30),
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          // fetch shops by category
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: Get.width / 4,
-                                              height: Get.height / 9,
-                                              decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: AppConstants
-                                                      .appSecondaryColor),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: productModel
-                                                      .productImages[0],
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: Get.width / 4,
-                                              child: Text(
-                                                productModel.productName,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: GoogleFonts.spaceGrotesk(
-                                                    textStyle: const TextStyle(
-                                                        color: AppConstants
-                                                            .appMainColor,
-                                                        fontSize: 12,
-                                                        //letterSpacing: .5,
-                                                        fontWeight:
-                                                            FontWeight.w100)),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                  )
-                                ],
-                              );
-                            });
-                      }
-                      return Container();
-                    }),
-              ),
-            ],
-          ),
+                      });
+                }
+                return Container();
+              }),
         ));
   }
 }

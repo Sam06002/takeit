@@ -1,18 +1,17 @@
 // ignore_for_file: file_names
-import 'package:flutter/services.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:takeit/controllers/cart_controller.dart';
+import 'package:takeit/models/product_model.dart/product_model.dart';
 
 import 'package:takeit/utils/app_constants.dart';
 
-import '../controllers/cart_controller.dart';
-import '../models/products_model.dart';
-
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final ProductModel product;
   final VoidCallback onAddToCart; // Callback for adding to cart
 
   const ProductCard(
@@ -35,9 +34,9 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (product.image != null && product.image!.isNotEmpty)
+                if (product.productImages.isNotEmpty)
                   CachedNetworkImage(
-                    imageUrl: product.image!,
+                    imageUrl: product.productImages[0],
                     height: Get.height / 5,
                     width: Get.width / 2.5,
                     fit: BoxFit.cover,
@@ -54,7 +53,9 @@ class ProductCard extends StatelessWidget {
                   ),
                 const SizedBox(height: 10),
                 Text(
-                  product.name,
+                  product.productName,
+                  maxLines: 2,
+                  overflow: TextOverflow.clip,
                   style: GoogleFonts.spaceGrotesk(
                       textStyle: const TextStyle(
                           color: AppConstants.appYellowColor,
@@ -62,8 +63,8 @@ class ProductCard extends StatelessWidget {
                           //letterSpacing: .5,
                           fontWeight: FontWeight.w500)),
                 ),
-                if (product.description.isNotEmpty)
-                  Text(product.description,
+                if (product.productDescription.isNotEmpty)
+                  Text(product.productDescription,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.spaceGrotesk(
@@ -76,7 +77,7 @@ class ProductCard extends StatelessWidget {
                   height: 5,
                   width: Get.width / 2.5,
                 ),
-                Text('Rs ${product.price.toStringAsFixed(2)}',
+                Text('Rs ${product.fullPrice}',
                     style: GoogleFonts.spaceGrotesk(
                         textStyle: TextStyle(
                             color: Colors.green[400],

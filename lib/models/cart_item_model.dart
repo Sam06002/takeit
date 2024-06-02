@@ -1,14 +1,16 @@
 // cart_item_model.dart
 
-import 'products_model.dart'; // Import the Product model
+// Import the Product model
+
+import 'package:takeit/models/product_model.dart/product_model.dart';
 
 class CartItem {
-  final Product product; // Now the Product type is defined
+  final ProductModel product; // Now the Product type is defined
   final int quantity;
 
   CartItem({required this.product, required this.quantity});
 
-  CartItem copyWith({Product? product, int? quantity}) {
+  CartItem copyWith({ProductModel? product, int? quantity}) {
     return CartItem(
       product: product ?? this.product,
       quantity: quantity ?? this.quantity,
@@ -24,7 +26,7 @@ class CartItem {
 
   factory CartItem.fromMap(Map<String, dynamic> map) {
     return CartItem(
-      product: Product.fromMap(map['product']),
+      product: ProductModel.fromMap(map['product']),
       quantity: map['quantity'],
     );
   }

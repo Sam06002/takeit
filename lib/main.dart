@@ -2,13 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:takeit/controllers/cart_controller.dart';
 
 import 'package:takeit/screens/authUI/splash_screen.dart';
 import 'package:takeit/services/mongo_db.dart';
 // ignore: unused_import
 import 'package:takeit/test_gmaps.dart';
 
-import 'controllers/cart_controller.dart';
 import 'controllers/hotspot_controller.dart';
 import 'controllers/nearbyShop_controller.dart';
 import 'firebase_options.dart';
@@ -24,6 +24,7 @@ Future<void> main() async {
   await DatabaseService().connect();
 
   Get.put(CartController());
+
   Get.put(HotspotController());
 
   // Establish MongoDB connection before running the app

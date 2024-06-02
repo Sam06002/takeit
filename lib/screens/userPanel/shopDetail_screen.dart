@@ -5,12 +5,14 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:takeit/models/outlet_model.dart';
+import 'package:takeit/screens/userPanel/dashboard.dart';
 import 'package:takeit/screens/userPanel/main_screen.dart';
 import 'package:takeit/utils/app_constants.dart';
 
 import '../../controllers/shop_detail_controller.dart';
 
-import '../../models/products_model.dart';
+import '../../models/product_model.dart/product_model.dart';
+
 import '../../models/shop_model.dart';
 import '../../widgets/productCard_widget.dart';
 import 'cart_screen.dart';
@@ -80,8 +82,8 @@ class ShopDetailScreen extends StatelessWidget {
                 // Make the list take up the remaining space
                 child: Obx(
                   () => shopDetailController.shop != null
-                      ? _buildProductList(shopDetailController
-                          .filteredProducts) // Use the filtered list
+                      ? _buildProductList(shopDetailController.filteredProducts
+                          as List<ProductModel>) // Use the filtered list
                       : const Center(
                           child: CircularProgressIndicator(
                           color: AppConstants.appYellowColor,
@@ -133,7 +135,7 @@ class ShopDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8),
               child: IconButton(
-                  onPressed: () => Get.to(() => const MainScreen()),
+                  onPressed: () => Get.back(),
                   icon: const Icon(
                     Icons.home_filled,
                     color: Colors.white,
@@ -170,7 +172,7 @@ class ShopDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(List<Product> products) {
+  Widget _buildProductList(List<ProductModel> products) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -188,7 +190,7 @@ class ShopDetailScreen extends StatelessWidget {
             onAddToCart: () {
               Get.snackbar(
                 'Added to Cart',
-                '${product.name} has been added to your cart.',
+                '${product.productName} has been added to your cart.',
                 snackPosition: SnackPosition.BOTTOM,
               );
             }); // Use the ProductCard widget

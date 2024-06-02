@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:geoflutterfire2/geoflutterfire2.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as loc;
+import 'package:takeit/models/product_model.dart/product_model.dart';
 
-import '../models/products_model.dart';
 import '../models/shop_model.dart';
 
 class ShopDetailController extends GetxController {
   TextEditingController searchController = TextEditingController();
-  RxList<Product> filteredProducts = <Product>[].obs;
+  RxList<ProductModel> filteredProducts = <ProductModel>[].obs;
 
   String shopId = "";
 
@@ -20,7 +20,7 @@ class ShopDetailController extends GetxController {
   final Rx<Shop?> _shop = Rx<Shop?>(null);
   Shop? get shop => _shop.value;
 
-  RxList<Product> products = <Product>[].obs; // Use RxList
+  RxList<ProductModel> products = <ProductModel>[].obs; // Use RxList
 
   @override
   void onInit() {
@@ -109,7 +109,9 @@ class ShopDetailController extends GetxController {
             .get();
 
         products.value = fetchedProducts.docs
-            .map((doc) => Product.fromMap(doc.data() as Map<String, dynamic>))
+            .map((doc) =>
+                ProductModel.fromMap(doc.data() as Map<String, dynamic>))
+            .cast<ProductModel>()
             .toList();
       } else {
         products.value = [];
@@ -123,7 +125,7 @@ class ShopDetailController extends GetxController {
   void searchProducts(String query) {
     filteredProducts.value = products
         .where((product) =>
-            product.name.toLowerCase().contains(query.toLowerCase()))
+            product.productName.toLowerCase().contains(query.toLowerCase()))
         .toList();
   }
 }

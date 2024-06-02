@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_card/image_card.dart';
 import 'package:takeit/models/categories_model.dart';
 import 'package:takeit/models/product_model.dart/product_model.dart';
-import 'package:takeit/models/products_model.dart';
+
 import 'package:takeit/utils/app_constants.dart';
 
 import '../controllers/nearbyShop_controller.dart';

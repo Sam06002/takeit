@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:takeit/models/product_model.dart/product_model.dart';
 
 import '../models/cart_item_model.dart';
-
-import '../models/products_model.dart';
 
 import '../models/order_model.dart' as orm;
 
@@ -51,7 +50,7 @@ class CartController extends GetxController {
   }
 
   // Function to add product to the cart
-  void addToCart(Product product) {
+  void addToCart(ProductModel product) {
     final existingItemIndex = cartItems
         .indexWhere((item) => item.product.productId == product.productId);
     if (existingItemIndex != -1) {

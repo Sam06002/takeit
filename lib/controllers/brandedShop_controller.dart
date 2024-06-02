@@ -21,10 +21,10 @@ class BrandedShopController extends GetxController {
       _brandedShops.value = snapshot.docs
           .map((doc) => BrandedShop.fromDocumentSnapshot(doc))
           .toList();
-      print("Fetched shops: ${_brandedShops.value}");
+      //print("Fetched shops: ${_brandedShops.value}");
     } catch (e) {
       // Handle error here
-      print('Error fetching branded shops: $e');
+      //print('Error fetching branded shops: $e');
     } finally {
       _isLoading.value = false;
     }

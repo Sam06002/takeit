@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:takeit/controllers/cart_controller.dart';
 import 'package:takeit/screens/userPanel/dashboard.dart';
-import 'package:takeit/screens/userPanel/main_screen.dart';
+
 import 'package:takeit/utils/app_constants.dart';
 
-import '../../controllers/cart_controller.dart';
-import '../../models/products_model.dart';
 // Import your route helper
 
 class CartScreen extends StatelessWidget {
@@ -44,10 +42,11 @@ class CartScreen extends StatelessWidget {
                       snapshot.data!.data() as Map<String, dynamic>?;
                   if (productData != null) {
                     return ListTile(
-                      leading: Image.network(productData['image'] as String),
-                      title: Text(productData['name'] as String),
+                      leading: Image.network(
+                          productData['productImages'][0] as String),
+                      title: Text(productData['productName'] as String),
                       subtitle: Text(
-                        "Rs ${(productData['price'] as num).toDouble().toStringAsFixed(2)}",
+                        "Rs ${(productData['fullPrice'] as String)}",
                         style: GoogleFonts.spaceGrotesk(
                           textStyle: const TextStyle(
                             color: Colors.grey,
