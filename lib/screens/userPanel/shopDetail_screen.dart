@@ -4,9 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:takeit/models/outlet_model.dart';
-import 'package:takeit/screens/userPanel/dashboard.dart';
-import 'package:takeit/screens/userPanel/main_screen.dart';
 import 'package:takeit/utils/app_constants.dart';
 
 import '../../controllers/shop_detail_controller.dart';
@@ -14,7 +11,13 @@ import '../../controllers/shop_detail_controller.dart';
 import '../../models/product_model.dart/product_model.dart';
 
 import '../../models/shop_model.dart';
+import '../../widgets/banner_widget.dart';
+import '../../widgets/categories_widget.dart';
+import '../../widgets/flashSale_widget.dart';
+import '../../widgets/headings_widget.dart';
 import '../../widgets/productCard_widget.dart';
+import 'allcategories_screen.dart';
+import 'allflash_sale_screen.dart';
 import 'cart_screen.dart';
 
 class ShopDetailScreen extends StatelessWidget {
@@ -42,45 +45,61 @@ class ShopDetailScreen extends StatelessWidget {
                         //letterSpacing: .5,
                         fontWeight: FontWeight.w500)))),
       ),
-      body: Padding(
-        // Add padding for better spacing
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          color: AppConstants.appSecondColor,
-          child: Column(
-            children: [
-              TextField(
-                // Search bar in the body
-                controller: shopDetailController.searchController,
-                onChanged: (query) =>
-                    shopDetailController.searchProducts(query),
-                decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                    borderSide: BorderSide(
-                        color: AppConstants.appSecondColor, width: 1.0),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                    borderSide: BorderSide(
-                        color: AppConstants.appSecondColor, width: 1.0),
-                  ),
-                  hintText: 'Search products',
-                  hintStyle: TextStyle(color: Colors.grey[500]),
-                  prefixIcon: const Icon(Icons.search),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: AppConstants.appSecondaryColor,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          // Add padding for better spacing
+          padding: const EdgeInsets.all(5.0),
+          child: Container(
+            color: AppConstants.appSecondColor,
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: BannerWidget(),
                 ),
-              ),
-              const SizedBox(
-                  height: 10), // Add spacing between search bar and list
-              Expanded(
-                // Make the list take up the remaining space
-                child: Obx(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: HeadingWidget(
+                      title: "Daily Essentials 🧺",
+                      onTap: () => Get.to(() => const AllCategoriesScreen()),
+                      subTitle: "See all"),
+                ),
+                const CategoriesWidget(),
+
+                TextField(
+                  // Search bar in the body
+                  controller: shopDetailController.searchController,
+                  onChanged: (query) =>
+                      shopDetailController.searchProducts(query),
+                  decoration: InputDecoration(
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      borderSide: BorderSide(
+                          color: AppConstants.appSecondColor, width: 1.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      borderSide: BorderSide(
+                          color: AppConstants.appSecondColor, width: 1.0),
+                    ),
+                    hintText: 'Search products',
+                    hintStyle: TextStyle(color: Colors.grey[500]),
+                    prefixIcon: const Icon(Icons.search),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: AppConstants.appSecondaryColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                // Add spacing between search bar and list
+                Obx(
                   () => shopDetailController.shop != null
                       ? _buildProductList(shopDetailController.filteredProducts
                           as List<ProductModel>) // Use the filtered list
@@ -89,8 +108,8 @@ class ShopDetailScreen extends StatelessWidget {
                           color: AppConstants.appYellowColor,
                         )),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -21,7 +21,7 @@ class _BannerWidgetState extends State<BannerWidget> {
   Widget build(BuildContext context) {
     // ignore: avoid_unnecessary_containers
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Obx(() {
         return CarouselSlider(
           items: _offerBannerController.offerBanner

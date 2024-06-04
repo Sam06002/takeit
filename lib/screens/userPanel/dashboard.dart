@@ -1,18 +1,15 @@
-import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_card/image_card.dart';
 
-import 'package:latlong2/latlong.dart';
 import 'package:takeit/models/shop_loc_model.dart';
 import 'package:takeit/screens/userPanel/allcategories_screen.dart';
 import 'package:takeit/screens/userPanel/allflash_sale_screen.dart';
 import 'package:takeit/screens/userPanel/search_screen.dart';
+import 'package:takeit/widgets/allproducts_widget.dart';
 import 'package:takeit/widgets/banner_widget.dart';
 import 'package:takeit/widgets/drawer_widget.dart';
 import 'package:takeit/widgets/flashSale_widget.dart';
@@ -22,11 +19,9 @@ import '../../controllers/shop_detail_controller.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/categories_widget.dart';
 import '../../widgets/map_widget.dart';
+import 'allProducts_screen.dart';
 import 'cart_screen.dart';
 import 'shopDetail_screen.dart';
-import 'package:geolocator/geolocator.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
@@ -57,47 +52,6 @@ class _DashBoardState extends State<DashBoard> {
     });
   }
 
-  Future<void> _fetchNearbyShops() async {
-    try {
-      // 1. Load Shops from JSON (You can optimize this by caching the result)
-      String shopsJson = await rootBundle.loadString('assets/shoploc.json');
-      List<ShopLoc> allShops = (json.decode(shopsJson) as List)
-          .map((e) => ShopLoc.fromJson(e))
-          .toList();
-
-      // 2. Get User's Location
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      final userLatLng = LatLng(position.latitude, position.longitude);
-
-      // 3. Calculate Distances (Optimized)
-      nearbyShops = allShops.where((shop) {
-        final distance = const Distance().as(LengthUnit.Kilometer, userLatLng,
-            LatLng(shop.latitude, shop.longitude));
-        return distance <= 1; // Within 1 km
-      }).toList();
-
-      // 4. Fetch Additional Details from Firestore
-      for (var shop in nearbyShops) {
-        final snapshot = await FirebaseFirestore.instance
-            .collection('shops')
-            .doc(shop.shopId)
-            .get();
-        if (snapshot.exists) {
-          shop.shopName =
-              snapshot.data()?['name'] ?? ''; // Set shop name from Firestore
-        }
-      }
-
-      setState(() {}); // Update the UI with fetched nearbyShops
-    } catch (e) {
-      // Handle errors, e.g., location permission denied, Firestore fetch failed
-      // ignore: avoid_print
-      print("Error fetching nearby shops: $e");
-      // You can show a Snackbar or alert dialog to the user
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,9 +62,11 @@ class _DashBoardState extends State<DashBoard> {
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
             icon: CircleAvatar(
-                backgroundImage: NetworkImage(userPhoto != null
-                    ? userPhoto!
-                    : "assets/images/logo1.png")),
+              backgroundImage: userPhoto != null
+                  ? NetworkImage(userPhoto!)
+                  : const AssetImage("assets/images/txtbg.png")
+                      as ImageProvider,
+            ),
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
@@ -218,17 +174,44 @@ class _DashBoardState extends State<DashBoard> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: HeadingWidget(
-                  title: "Flash Sale 💰",
-                  onTap: () => Get.to(() => AllFlashSaleScreen()),
+                  title: "Shops  💰",
+                  onTap: () => Get.to(() => const AllFlashSaleScreen()),
                   subTitle: "See all"),
             ),
-            const FlashSaleWidget(),
+            GestureDetector(
+              onTap: () {
+                Get.put(ShopDetailController(
+                    shopId:
+                        "C4iO9SKkFsFnViEo8YIi")); // Put the controller before navigating
+                Get.to(() => const ShopDetailScreen(
+                      shopId: "C4iO9SKkFsFnViEo8YIi",
+                    ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FillImageCard(
+                  width: Get.width,
+                  heightImage: 140,
+                  imageProvider: const NetworkImage(
+                      "https://www.24-seven.in/img/screen7-3.png"),
+                  tags: [const Text("Groceries")],
+                  title: const Text("Kia's Heaven 247"),
+                  description: const Text("Bahadurgarh HR"),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: HeadingWidget(
-                  title: "Flash Sale 💰", onTap: () {}, subTitle: "See all"),
+              child: FillImageCard(
+                width: Get.width,
+                heightImage: 140,
+                imageProvider: const NetworkImage(
+                    "https://lh3.googleusercontent.com/p/AF1QipPrhrk0zmT67VWzIYIn0R6g2wxmrgThukAxiRf1=s1360-w1360-h1020"),
+                tags: [const Text("Fruits & Shakes")],
+                title: const Text("Balaji Shake Wala"),
+                description: const Text("Bahadurgarh HR"),
+              ),
             ),
-            const FlashSaleWidget(),
           ],
         ),
       ),
@@ -259,8 +242,9 @@ class _DashBoardState extends State<DashBoard> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.antiAlias,
         shadowColor: Colors.black,
-        surfaceTintColor: AppConstants.appSecondColor,
+        surfaceTintColor: AppConstants.appSecondaryColor,
         elevation: 10,
         notchMargin: 5.0,
         shape: const CircularNotchedRectangle(),

@@ -49,6 +49,16 @@ class CartController extends GetxController {
     }
   }
 
+  int getProductQuantity(String productId) {
+    final index =
+        cartItems.indexWhere((item) => item.product.productId == productId);
+    if (index != -1) {
+      return cartItems[index].quantity;
+    } else {
+      return 0;
+    }
+  }
+
   // Function to add product to the cart
   void addToCart(ProductModel product) {
     final existingItemIndex = cartItems

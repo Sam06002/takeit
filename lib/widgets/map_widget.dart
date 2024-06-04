@@ -2,9 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:takeit/utils/app_constants.dart';
+
+import '../controllers/shop_detail_controller.dart';
+import '../screens/userPanel/shopDetail_screen.dart';
 
 class MapWidget extends StatefulWidget {
   const MapWidget({super.key});
@@ -72,6 +76,14 @@ class _MapWidgetState extends State<MapWidget> {
       );
 
       _userLocationMarker = Marker(
+        onTap: () {
+          Get.put(ShopDetailController(
+              shopId:
+                  "C4iO9SKkFsFnViEo8YIi")); // Put the controller before navigating
+          Get.to(() => const ShopDetailScreen(
+                shopId: "C4iO9SKkFsFnViEo8YIi",
+              ));
+        },
         markerId: const MarkerId('user_location'),
         position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
         // Customize your marker icon here

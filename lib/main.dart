@@ -10,7 +10,6 @@ import 'package:takeit/services/mongo_db.dart';
 import 'package:takeit/test_gmaps.dart';
 
 import 'controllers/hotspot_controller.dart';
-import 'controllers/nearbyShop_controller.dart';
 import 'firebase_options.dart';
 
 //import 'screens/userPanel/main_screen.dart';
@@ -44,7 +43,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       builder: EasyLoading.init(),
-      //home: IosGmap(),
     );
   }
 }

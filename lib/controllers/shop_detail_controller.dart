@@ -109,8 +109,7 @@ class ShopDetailController extends GetxController {
             .get();
 
         products.value = fetchedProducts.docs
-            .map((doc) =>
-                ProductModel.fromMap(doc.data() as Map<String, dynamic>))
+            .map((doc) => ProductModel.fromMap(doc.data()))
             .cast<ProductModel>()
             .toList();
       } else {

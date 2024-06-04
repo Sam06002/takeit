@@ -3,17 +3,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_card/image_card.dart';
-import 'package:takeit/models/categories_model.dart';
 import 'package:takeit/models/product_model.dart/product_model.dart';
 
 import 'package:takeit/utils/app_constants.dart';
-
-import '../controllers/nearbyShop_controller.dart';
-import '../controllers/shop_detail_controller.dart';
 
 class FlashSaleWidget extends StatelessWidget {
   const FlashSaleWidget({super.key});
@@ -34,7 +28,7 @@ class FlashSaleWidget extends StatelessWidget {
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
+              return SizedBox(
                 height: Get.height / 5,
                 child: const Center(
                   child: CupertinoActivityIndicator(),
@@ -68,7 +62,6 @@ class FlashSaleWidget extends StatelessWidget {
                           productDescription: productData['productDescription'],
                           createdAt: productData['createdAt'],
                           updatedAt: productData['updatedAt']);
-
                       return Row(
                         children: [
                           Padding(
@@ -77,72 +70,78 @@ class FlashSaleWidget extends StatelessWidget {
                                 onTap: () {
                                   // fetch shops by category
                                 },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: Get.width / 3,
-                                      height: Get.height / 7,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color:
-                                              AppConstants.appSecondaryColor),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              productModel.productImages[0],
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: Get.height / 7,
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                AppConstants.appSecondaryColor),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                productModel.productImages[0],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      productModel.productName,
-                                      style: GoogleFonts.spaceGrotesk(
-                                          textStyle: const TextStyle(
-                                              color: AppConstants.appMainColor,
-                                              fontSize: 12,
-                                              overflow: TextOverflow.ellipsis,
-                                              //letterSpacing: .5,
-                                              fontWeight: FontWeight.w100)),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Rs ${productModel.salePrice} ',
-                                          style: GoogleFonts.spaceGrotesk(
-                                              textStyle: const TextStyle(
-                                                  color: AppConstants
-                                                      .appYellowColor,
-                                                  fontSize: 12,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  //letterSpacing: .5,
-                                                  fontWeight: FontWeight.w600)),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              color:
-                                                  AppConstants.appThirdColor),
-                                          child: Text(
-                                            '  Rs ${productModel.fullPrice}',
+                                      Text(
+                                        productModel.productName,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.spaceGrotesk(
+                                            textStyle: const TextStyle(
+                                                color:
+                                                    AppConstants.appMainColor,
+                                                fontSize: 12,
+                                                overflow: TextOverflow.ellipsis,
+                                                //letterSpacing: .5,
+                                                fontWeight: FontWeight.w100)),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Rs ${productModel.salePrice} ',
                                             style: GoogleFonts.spaceGrotesk(
                                                 textStyle: const TextStyle(
                                                     color: AppConstants
-                                                        .appSecondColor,
-                                                    fontSize: 10,
-                                                    decoration: TextDecoration
-                                                        .lineThrough,
+                                                        .appYellowColor,
+                                                    fontSize: 12,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     //letterSpacing: .5,
                                                     fontWeight:
-                                                        FontWeight.w100)),
+                                                        FontWeight.w600)),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          Container(
+                                            decoration: const BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                color:
+                                                    AppConstants.appThirdColor),
+                                            child: Text(
+                                              '  Rs ${productModel.fullPrice}',
+                                              style: GoogleFonts.spaceGrotesk(
+                                                  textStyle: const TextStyle(
+                                                      color: AppConstants
+                                                          .appSecondColor,
+                                                      fontSize: 10,
+                                                      decoration: TextDecoration
+                                                          .lineThrough,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      //letterSpacing: .5,
+                                                      fontWeight:
+                                                          FontWeight.w100)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 )),
                           )
                         ],

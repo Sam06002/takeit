@@ -86,7 +86,7 @@ class CartScreen extends StatelessWidget {
       bottomNavigationBar: GestureDetector(
         onTap: () async {
           if (cartController.cartItems.isNotEmpty) {
-            String shopId = cartController.cartItems.first.product.productId;
+            String shopId = 'vxfnauCLtKhFRlyRluv0'; //247 Shop Id
             try {
               await cartController.placeOrder(
                   shopId); // Pass the shopId from which the items were added

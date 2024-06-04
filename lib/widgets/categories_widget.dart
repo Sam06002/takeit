@@ -3,16 +3,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_card/image_card.dart';
 import 'package:takeit/models/categories_model.dart';
 import 'package:takeit/screens/userPanel/single_category_products_screen.dart';
 import 'package:takeit/utils/app_constants.dart';
-
-import '../controllers/nearbyShop_controller.dart';
-import '../controllers/shop_detail_controller.dart';
 
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({super.key});
@@ -31,7 +27,7 @@ class CategoriesWidget extends StatelessWidget {
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
+              return SizedBox(
                 height: Get.height / 5,
                 child: const Center(
                   child: CupertinoActivityIndicator(),

@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       loggedIn(context);
     });
     final screenSize = MediaQuery.of(context).size;
@@ -71,7 +71,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(50),
-                  child: Lottie.asset("assets/images/pay.json", repeat: false),
+                  child: Image.asset("assets/images/txtbg.png"),
+                  //child: Lottie.asset("assets/images/pay.json", repeat: false),
                 ),
               ),
               // ignore: avoid_unnecessary_containers
