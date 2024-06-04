@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:takeit/controllers/cart_controller.dart';
@@ -86,6 +87,7 @@ class CartScreen extends StatelessWidget {
       bottomNavigationBar: GestureDetector(
         onTap: () async {
           if (cartController.cartItems.isNotEmpty) {
+            EasyLoading.show(status: "Get Ready to Take it");
             String shopId = 'vxfnauCLtKhFRlyRluv0'; //247 Shop Id
             try {
               await cartController.placeOrder(
@@ -95,6 +97,8 @@ class CartScreen extends StatelessWidget {
                 'Your order has been placed successfully!',
                 snackPosition: SnackPosition.BOTTOM,
               );
+              EasyLoading.dismiss(animation: false);
+
               // Optional: Navigate to order confirmation screen
               Get.to(() => const DashBoard());
             } catch (e) {

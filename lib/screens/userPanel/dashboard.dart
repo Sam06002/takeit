@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -192,7 +193,7 @@ class _DashBoardState extends State<DashBoard> {
                 child: FillImageCard(
                   width: Get.width,
                   heightImage: 140,
-                  imageProvider: const NetworkImage(
+                  imageProvider: const CachedNetworkImageProvider(
                       "https://www.24-seven.in/img/screen7-3.png"),
                   tags: [const Text("Groceries")],
                   title: const Text("Kia's Heaven 247"),
@@ -205,7 +206,7 @@ class _DashBoardState extends State<DashBoard> {
               child: FillImageCard(
                 width: Get.width,
                 heightImage: 140,
-                imageProvider: const NetworkImage(
+                imageProvider: const CachedNetworkImageProvider(
                     "https://lh3.googleusercontent.com/p/AF1QipPrhrk0zmT67VWzIYIn0R6g2wxmrgThukAxiRf1=s1360-w1360-h1020"),
                 tags: [const Text("Fruits & Shakes")],
                 title: const Text("Balaji Shake Wala"),

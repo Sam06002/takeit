@@ -61,7 +61,7 @@ class _SigninScreenState extends State<SigninScreen> {
             children: [
               isKeyboardVisible
                   ? const SizedBox.shrink()
-                  : Column(children: [Image.asset("assets/images/logo.png")]),
+                  : Column(children: [Image.asset("assets/images/txtbg.png")]),
               Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   width: screenSize.width / 1.25,
