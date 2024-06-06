@@ -96,17 +96,15 @@ class ShopDetailController extends GetxController {
   Future<void> fetchProducts() async {
     try {
       final productsSnapshot = await FirebaseFirestore.instance
-          .collection('shops/$shopId/shopProducts') // Updated path
+          .collection('products') // Updated path
           .get();
 
       final productReferences =
           productsSnapshot.docs.map((doc) => doc.get('productId')).toList();
 
       if (productReferences.isNotEmpty) {
-        final fetchedProducts = await FirebaseFirestore.instance
-            .collection('products')
-            .where(FieldPath.documentId, whereIn: productReferences)
-            .get();
+        final fetchedProducts =
+            await FirebaseFirestore.instance.collection('products').get();
 
         products.value = fetchedProducts.docs
             .map((doc) => ProductModel.fromMap(doc.data()))

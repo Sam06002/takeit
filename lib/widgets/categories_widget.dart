@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:takeit/demo.dart';
 import 'package:takeit/models/categories_model.dart';
-import 'package:takeit/screens/userPanel/single_category_products_screen.dart';
 import 'package:takeit/utils/app_constants.dart';
 
 class CategoriesWidget extends StatelessWidget {
@@ -61,13 +61,11 @@ class CategoriesWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: GestureDetector(
-                                onTap: () =>
-                                    Get.to(() => SingleCategoryProductsScreen(
-                                          categoryId:
-                                              categoriesModel.categoryId,
-                                          categoryImg:
-                                              categoriesModel.categoryImg,
-                                        )),
+                                onTap: () => Get.to(() =>
+                                    DemoSingleCategoryProductScreen(
+                                      categoryId: categoriesModel.categoryId,
+                                      categoryImg: categoriesModel.categoryImg,
+                                    )),
                                 child: Column(
                                   children: [
                                     Container(

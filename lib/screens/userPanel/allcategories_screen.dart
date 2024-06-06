@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:takeit/screens/userPanel/single_category_products_screen.dart';
+import 'package:takeit/demo.dart';
 import 'package:takeit/utils/app_constants.dart';
 
 import '../../models/categories_model.dart';
@@ -88,13 +88,11 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                         return Row(
                           children: [
                             GestureDetector(
-                                onTap: () =>
-                                    Get.to(() => SingleCategoryProductsScreen(
-                                          categoryId:
-                                              categoriesModel.categoryId,
-                                          categoryImg:
-                                              categoriesModel.categoryImg,
-                                        )),
+                                onTap: () => Get.to(() =>
+                                    DemoSingleCategoryProductScreen(
+                                      categoryId: categoriesModel.categoryId,
+                                      categoryImg: categoriesModel.categoryImg,
+                                    )),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:

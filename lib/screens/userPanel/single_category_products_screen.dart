@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:takeit/utils/app_constants.dart';
 
-import '../../models/categories_model.dart';
 import '../../models/product_model.dart/product_model.dart';
 
+// ignore: must_be_immutable
 class SingleCategoryProductsScreen extends StatefulWidget {
   String categoryId;
   String categoryImg;
@@ -125,7 +125,7 @@ class SingleCategoryProductsScreenState
                                           ),
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width: Get.width / 4,
                                         child: Text(
                                           productModel.productName,

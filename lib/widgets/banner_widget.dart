@@ -43,7 +43,7 @@ class _BannerWidgetState extends State<BannerWidget> {
                   ))
               .toList(),
           options: CarouselOptions(
-            scrollPhysics: AlwaysScrollableScrollPhysics(),
+            scrollPhysics: const AlwaysScrollableScrollPhysics(),
             height: MediaQuery.of(context).size.height / 6,
             autoPlayCurve: Curves.fastOutSlowIn,
             autoPlayAnimationDuration: const Duration(milliseconds: 800),

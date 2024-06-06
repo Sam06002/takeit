@@ -4,8 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:takeit/screens/userPanel/cart_screen.dart';
 import 'package:takeit/utils/app_constants.dart';
 import 'package:takeit/widgets/productCard_widget.dart';
 
@@ -52,6 +54,35 @@ class SingleCategoryProductsScreenState
                 color: AppConstants.appYellowColor,
               )),
         ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: AppConstants.appYellowColor,
+            foregroundColor: AppConstants.appMainColor,
+            onPressed: () {
+              Vibrate.feedback(FeedbackType.selection);
+              showModalBottomSheet(
+                  backgroundColor: Colors.black,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                          color: AppConstants.appSecondColor,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25))),
+                      height: Get.height / 2,
+                      child: const CartScreen(),
+                    );
+                  });
+            },
+            child: const Icon(
+              Icons.shopping_cart,
+              color: Colors.black,
+            ),
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: FutureBuilder(
@@ -86,10 +117,12 @@ class SingleCategoryProductsScreenState
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 3,
+                        childAspectRatio: 0.9,
                         crossAxisSpacing: 3,
                         crossAxisCount: 2,
                       ),
                       itemBuilder: (context, index) {
+                        final itemCount = snapshot.data!.docs.length;
                         final productData = snapshot.data!.docs[index];
                         ProductModel productModel = ProductModel(
                             productId: productData['productId'],
@@ -105,13 +138,15 @@ class SingleCategoryProductsScreenState
                                 productData['productDescription'],
                             createdAt: productData['createdAt'],
                             updatedAt: productData['updatedAt']);
-                        return Expanded(
-                          // Make the list take up the remaining space
-                          child: Obx(() => buildProductList(
-                                  productModel, index) // Use the filtered list
-
-                              ),
-                        );
+                        return ProductCard(
+                            product: productModel,
+                            onAddToCart: () {
+                              Get.snackbar(
+                                'Added to Cart',
+                                '${productModel.productName} has been added to your cart.',
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            });
                       });
                 }
                 return Container();
@@ -122,16 +157,16 @@ class SingleCategoryProductsScreenState
   Widget buildProductList(products, iindex) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, // Two columns
-        childAspectRatio: 0.5,
+        childAspectRatio: 0.8,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
       ),
       itemCount: iindex,
-      itemBuilder: (context, index) {
-        final product = products[index];
+      itemBuilder: (context, iindex) {
+        final product = products[iindex];
         return ProductCard(
             product: product,
             onAddToCart: () {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -48,6 +50,10 @@ class CartController extends GetxController {
       // Handle errors (e.g., show error message)
       print('Error placing order: $e');
     }
+  }
+
+  Future<void> clearCart() async {
+    cartItems.clear();
   }
 
   int getProductQuantity(String productId) {

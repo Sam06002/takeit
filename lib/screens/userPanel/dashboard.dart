@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,17 +9,14 @@ import 'package:takeit/models/shop_loc_model.dart';
 import 'package:takeit/screens/userPanel/allcategories_screen.dart';
 import 'package:takeit/screens/userPanel/allflash_sale_screen.dart';
 import 'package:takeit/screens/userPanel/search_screen.dart';
-import 'package:takeit/widgets/allproducts_widget.dart';
 import 'package:takeit/widgets/banner_widget.dart';
 import 'package:takeit/widgets/drawer_widget.dart';
-import 'package:takeit/widgets/flashSale_widget.dart';
 import 'package:takeit/widgets/headings_widget.dart';
 
 import '../../controllers/shop_detail_controller.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/categories_widget.dart';
 import '../../widgets/map_widget.dart';
-import 'allProducts_screen.dart';
 import 'cart_screen.dart';
 import 'shopDetail_screen.dart';
 
@@ -56,6 +52,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       backgroundColor: AppConstants.appSecondColor,
       appBar: AppBar(
         backgroundColor: AppConstants.appSecondColor,
@@ -151,7 +148,7 @@ class _DashBoardState extends State<DashBoard> {
                             color: AppConstants.appYellowColor,
                           ),
                           Text(
-                            "Search Shops",
+                            "Search Products",
                             style: TextStyle(
                               color: Colors.grey[500],
                             ),
@@ -195,7 +192,7 @@ class _DashBoardState extends State<DashBoard> {
                   heightImage: 140,
                   imageProvider: const CachedNetworkImageProvider(
                       "https://www.24-seven.in/img/screen7-3.png"),
-                  tags: [const Text("Groceries")],
+                  tags: const [Text("Groceries")],
                   title: const Text("Kia's Heaven 247"),
                   description: const Text("Bahadurgarh HR"),
                 ),
@@ -208,11 +205,14 @@ class _DashBoardState extends State<DashBoard> {
                 heightImage: 140,
                 imageProvider: const CachedNetworkImageProvider(
                     "https://lh3.googleusercontent.com/p/AF1QipPrhrk0zmT67VWzIYIn0R6g2wxmrgThukAxiRf1=s1360-w1360-h1020"),
-                tags: [const Text("Fruits & Shakes")],
+                tags: const [Text("Fruits & Shakes")],
                 title: const Text("Balaji Shake Wala"),
                 description: const Text("Bahadurgarh HR"),
               ),
             ),
+            SizedBox(
+              height: Get.height / 10,
+            )
           ],
         ),
       ),

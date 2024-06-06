@@ -1,6 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
@@ -14,11 +14,9 @@ import '../../models/product_model.dart/product_model.dart';
 import '../../models/shop_model.dart';
 import '../../widgets/banner_widget.dart';
 import '../../widgets/categories_widget.dart';
-import '../../widgets/flashSale_widget.dart';
 import '../../widgets/headings_widget.dart';
 import '../../widgets/productCard_widget.dart';
 import 'allcategories_screen.dart';
-import 'allflash_sale_screen.dart';
 import 'cart_screen.dart';
 
 class ShopDetailScreen extends StatelessWidget {
@@ -60,6 +58,12 @@ class ShopDetailScreen extends StatelessWidget {
                     height: 25,
                   ),
                   TextField(
+                    style: GoogleFonts.spaceGrotesk(
+                        textStyle: const TextStyle(
+                            color: AppConstants.appYellowColor,
+                            fontSize: 15,
+                            //letterSpacing: .5,
+                            fontWeight: FontWeight.w500)),
                     // Search bar in the body
                     controller: shopDetailController.searchController,
                     onChanged: (query) =>
@@ -116,12 +120,17 @@ class ShopDetailScreen extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-
                   // Add spacing between search bar and list
                   Obx(
                     () => shopDetailController.shop != null
-                        ? _buildProductList(
-                            shopDetailController.filteredProducts
+                        ? _buildProductList(shopDetailController
+                                        .filteredProducts
+                                    // ignore: unnecessary_null_comparison
+                                    as List<ProductModel> !=
+                                null
+                            ? shopDetailController.filteredProducts
+                                as List<ProductModel>
+                            : shopDetailController.products
                                 as List<ProductModel>) // Use the filtered list
                         : const Center(
                             child: CircularProgressIndicator(
@@ -218,11 +227,11 @@ class ShopDetailScreen extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, // Two columns
-        childAspectRatio: 0.5,
+        childAspectRatio: 0.8,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
       ),
-      itemCount: products.length,
+      itemCount: 2,
       itemBuilder: (context, index) {
         final product = products[index];
         return ProductCard(
